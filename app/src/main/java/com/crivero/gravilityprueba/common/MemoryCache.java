@@ -2,6 +2,7 @@ package com.crivero.gravilityprueba.common;
 
 /**
  * Created by crivero on 23/02/2016.
+ *
  */
 import java.lang.ref.SoftReference;
 import java.util.Collections;

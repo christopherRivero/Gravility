@@ -1,10 +1,8 @@
 package com.crivero.gravilityprueba.presentation.main.detailfragment;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +18,6 @@ import com.crivero.gravilityprueba.application.Gravility;
 import com.crivero.gravilityprueba.common.ImageLoader;
 import com.crivero.gravilityprueba.objects.Entry;
 
-import java.util.List;
 
 public class DetailFragment extends Fragment implements IDetailFragmentView{
 
@@ -74,15 +71,18 @@ public class DetailFragment extends Fragment implements IDetailFragmentView{
 
     @Override
     public void cargarLista() {
-        Entry entry = new Entry();
-        entry = appState.entry;
+        Entry entry = appState.entry;
 
         ImageLoader imgLoader = new ImageLoader(getActivity().getApplicationContext());
         imgLoader.DisplayImage(entry.getImImage().get(2).getLabel(), R.drawable.ic_launcher, imgLogo);
         tvTitle.setText(entry.getImName().getLabel());
         tvSubTitle.setText(entry.getTitle().getLabel());
         tvDescription.setText(entry.getSummary().getLabel());
-        tvPrice.setText(entry.getImPrice().getAttributes().getAmount()+" "+ entry.getImPrice().getAttributes().getCurrency());
+        String amount = entry.getImPrice().getAttributes().getAmount();
+        if(amount.equals("0.00000")){
+            amount = "Free ";
+        }
+        tvPrice.setText(amount);
     }
 
 }

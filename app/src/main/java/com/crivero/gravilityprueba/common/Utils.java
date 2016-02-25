@@ -2,6 +2,7 @@ package com.crivero.gravilityprueba.common;
 
 /**
  * Created by crivero on 23/02/2016.
+ *
  */
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,6 +22,8 @@ public class Utils {
                 os.write(bytes, 0, count);
             }
         }
-        catch(Exception ex){}
+        catch(Exception ex){
+            ex.fillInStackTrace();
+        }
     }
 }
