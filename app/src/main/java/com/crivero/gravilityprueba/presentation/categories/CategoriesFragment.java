@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.crivero.gravilityprueba.R;
 import com.crivero.gravilityprueba.application.Gravility;
@@ -34,7 +35,7 @@ public class CategoriesFragment extends Fragment implements ICategoriesView{
     Gravility appState;
     ListView lstCategories;
     ICategoriesPresenter presenter;
-    String[] values = new String[] { "Games",
+    String[] values = new String[]{"Games",
             "Entertainment",
             "Social Networking",
             "Navigation",
@@ -43,6 +44,7 @@ public class CategoriesFragment extends Fragment implements ICategoriesView{
             "Education",
             "Photo & Video"
     };
+    TextView tvCategoriesTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,10 @@ public class CategoriesFragment extends Fragment implements ICategoriesView{
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         appState = (Gravility) getActivity().getApplication();
         lstCategories = (ListView) view.findViewById(R.id.lst_categories);
+        tvCategoriesTitle = (TextView) view.findViewById(R.id.tv_categories_title);
 
-        presenter.cargarLista();
+        AsynkTasckListado asynkTasckListado = new AsynkTasckListado();
+        asynkTasckListado.execute();
 
         lstCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -74,6 +78,7 @@ public class CategoriesFragment extends Fragment implements ICategoriesView{
 
     @Override
     public void cargarLista() {
+        tvCategoriesTitle.setText(R.string.title_categories_fragment);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
         lstCategories.setAdapter(adapter);
 
@@ -89,6 +94,39 @@ public class CategoriesFragment extends Fragment implements ICategoriesView{
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    public class AsynkTasckListado extends AsyncTask<Void, Integer, View> {
+        ProgressDialog progDailog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDailog = new ProgressDialog(getActivity());
+            progDailog.setMessage("Cargando categorias...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(false);
+            progDailog.show();
+        }
+
+        @Override
+        protected View doInBackground(Void... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(View view) {
+            super.onPostExecute(view);
+            progDailog.dismiss();
+            presenter.cargarLista();
+
+        }
     }
 
 }

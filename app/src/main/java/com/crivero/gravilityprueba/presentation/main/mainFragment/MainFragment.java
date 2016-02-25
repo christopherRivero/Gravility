@@ -77,7 +77,6 @@ public class MainFragment extends Fragment implements IMainFragmentView {
         ArrayList<Entry> filtredList = new ArrayList<>();
         int size = entry.size();
         for(int i = 0; i < size ;i++ ){
-            String label = entry.get(i).getCategory().getAttributes().getLabel();
             if(appState.category.equals(entry.get(i).getCategory().getAttributes().getLabel())){
                 filtredList.add(entry.get(i));
             }

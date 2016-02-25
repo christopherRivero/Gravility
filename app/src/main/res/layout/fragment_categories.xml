@@ -5,7 +5,7 @@
     android:orientation="vertical"
     tools:context="com.crivero.gravilityprueba.presentation.categories.CategoriesFragment">
     <TextView
-        android:text="@string/title_categories_fragment"
+        android:id="@+id/tv_categories_title"
         android:textStyle="bold"
         android:padding="10dp"
         android:textSize="17sp"
